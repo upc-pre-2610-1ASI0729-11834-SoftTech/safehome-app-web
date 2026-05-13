@@ -1,0 +1,85 @@
+<section aria-label="Add device page">
+      <a class="safe-button-ghost" routerLink="/devices"><span class="material-icons">arrow_back</span>{{ 'COMMON.BACK' | translate }}</a>
+      <h1 class="page-title">{{ 'DEVICES.ADD_TITLE' | translate }}</h1>
+      <p class="page-subtitle">{{ 'DEVICES.ADD_SUBTITLE' | translate }}</p>
+
+      <div class="stepper" aria-label="Device creation steps">
+        <div class="step" [class.done]="step() > 1" [class.current]="step() === 1">
+          <span>{{ step() > 1 ? '✓' : '1' }}</span>
+          <strong>{{ 'DEVICES.SELECT_TYPE' | translate }}</strong>
+        </div>
+        <div class="step-line"></div>
+        <div class="step" [class.done]="step() > 2" [class.current]="step() === 2">
+          <span>{{ step() > 2 ? '✓' : '2' }}</span>
+          <strong>{{ 'DEVICES.ENTER_DATA' | translate }}</strong>
+        </div>
+        <div class="step-line"></div>
+        <div class="step" [class.current]="step() === 3">
+          <span>3</span>
+          <strong>{{ 'DEVICES.CONFIRM' | translate }}</strong>
+        </div>
+      </div>
+
+      <section class="form-layout">
+        <form class="safe-card form-card" (ngSubmit)="saveDevice()" aria-label="Device form">
+          <ng-container *ngIf="step() === 1">
+            <h3>{{ 'DEVICES.SELECT_TYPE' | translate }}</h3>
+            <p class="helper">Choose the type of device you want to connect.</p>
+            <div class="type-grid">
+              <button type="button" *ngFor="let type of types" [class.active]="draft.type === type.value" (click)="selectType(type.value)">
+                <span class="material-icons">{{ type.icon }}</span>
+                <strong>{{ type.labelKey | translate }}</strong>
+                <small>{{ type.textKey | translate }}</small>
+              </button>
+            </div>
+            <div class="form-actions">
+              <a class="safe-button-outline" routerLink="/devices">{{ 'COMMON.CANCEL' | translate }}</a>
+              <button class="safe-button" type="button" (click)="nextStep()">{{ 'COMMON.NEXT' | translate }}</button>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="step() === 2">
+            <h3>{{ 'DEVICES.DEVICE_DATA' | translate }}</h3>
+            <div class="fields">
+              <label><span class="field-label">{{ 'DEVICES.NAME' | translate }}</span><input class="safe-input" name="deviceName" [(ngModel)]="draft.name" placeholder="Example: Sensor PIR entrance" required></label>
+              <label><span class="field-label">{{ 'DEVICES.CODE' | translate }}</span><input class="safe-input" name="deviceCode" [(ngModel)]="draft.code" readonly aria-label="Device code"></label>
+              <label><span class="field-label">{{ 'DEVICES.ZONE' | translate }}</span><input class="safe-input" name="deviceZone" [(ngModel)]="draft.zone" placeholder="Example: Main entrance" required></label>
+              <label><span class="field-label">{{ 'DEVICES.DESCRIPTION' | translate }}</span><input class="safe-input" name="deviceDescription" [(ngModel)]="draft.description" placeholder="Example: Sensor installed near the main door."></label>
+            </div>
+            <div class="status-select">
+              <label [class.active]="draft.status === 'active'"><input type="radio" name="deviceStatus" value="active" [(ngModel)]="draft.status">{{ 'DEVICES.ACTIVE' | translate }}</label>
+              <label [class.active]="draft.status === 'inactive'"><input type="radio" name="deviceStatus" value="inactive" [(ngModel)]="draft.status">{{ 'DEVICES.INACTIVE' | translate }}</label>
+            </div>
+            <div class="form-actions">
+              <button class="safe-button-outline" type="button" (click)="previousStep()">{{ 'COMMON.BACK' | translate }}</button>
+              <button class="safe-button" type="button" (click)="nextStep()">{{ 'COMMON.NEXT' | translate }}</button>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="step() === 3">
+            <h3>{{ 'DEVICES.CONFIRM' | translate }}</h3>
+            <div class="confirm-box">
+              <div class="confirm-line"><small>{{ 'DEVICES.TYPE' | translate }}</small><strong>{{ typeLabel() }}</strong></div>
+              <div class="confirm-line"><small>{{ 'DEVICES.NAME' | translate }}</small><strong>{{ draft.name || ('DEVICES.NEW_DEVICE' | translate) }}</strong></div>
+              <div class="confirm-line"><small>{{ 'DEVICES.CODE' | translate }}</small><strong>{{ draft.code }}</strong></div>
+              <div class="confirm-line"><small>{{ 'DEVICES.ZONE' | translate }}</small><strong>{{ draft.zone }}</strong></div>
+              <div class="confirm-line"><small>{{ 'DEVICES.DESCRIPTION' | translate }}</small><strong>{{ draft.description || '-' }}</strong></div>
+              <div class="confirm-line"><small>{{ 'DEVICES.STATUS' | translate }}</small><strong>{{ draft.status }}</strong></div>
+            </div>
+            <div class="form-actions">
+              <button class="safe-button-outline" type="button" (click)="previousStep()">{{ 'COMMON.BACK' | translate }}</button>
+              <button class="safe-button" type="submit">{{ 'COMMON.SAVE' | translate }}</button>
+            </div>
+          </ng-container>
+        </form>
+
+        <aside class="safe-card summary">
+          <h3>{{ 'COMMON.SUMMARY' | translate }}</h3>
+          <div class="summary-icon"><span class="material-icons">{{ selectedIcon() }}</span></div>
+          <strong>{{ draft.name || ('DEVICES.NEW_DEVICE' | translate) }}</strong>
+          <small>{{ draft.type }} · {{ draft.zone || ('DEVICES.NO_ZONE' | translate) }}</small>
+          <p>{{ 'DEVICES.ADD_TIP' | translate }}</p>
+        </aside>
+      </section>
+    <p *ngIf="message()" class="toast">{{ message() }}</p>
+    </section>

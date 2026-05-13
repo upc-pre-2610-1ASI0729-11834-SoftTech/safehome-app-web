@@ -1,0 +1,87 @@
+<section *ngIf="device() as item; else deviceNotReady" aria-label="Device detail page">
+      <div class="toolbar-row">
+        <a class="safe-button-ghost" routerLink="/devices"><span class="material-icons">arrow_back</span>{{ 'COMMON.BACK' | translate }}</a>
+        <div class="actions">
+          <button class="safe-button-danger" type="button" (click)="deleteDevice(item.id)"><span class="material-icons">delete</span>{{ 'COMMON.DELETE' | translate }}</button>
+          <button class="safe-button-outline" type="button" (click)="startEdit(item)"><span class="material-icons">edit</span>{{ editing ? ('COMMON.CANCEL' | translate) : ('COMMON.EDIT' | translate) }}</button>
+        </div>
+      </div>
+
+      <article class="device-hero">
+        <span class="device-icon material-icons">{{ icon(item.type) }}</span>
+        <div>
+          <span [class]="'badge ' + statusClass(item.status)">● {{ statusLabel(item.status) | translate }}</span>
+          <h1>{{ item.name }}</h1>
+          <p>{{ item.description }}</p>
+          <small>{{ item.zone }} · {{ item.code }}</small>
+        </div>
+        <label class="status-toggle">
+          <span>{{ 'DEVICES.STATUS' | translate }}</span>
+          <label class="toggle"><input type="checkbox" [checked]="item.status === 'active'" (change)="store.toggleDevice(item.id)"><span></span></label>
+        </label>
+      </article>
+
+      <section class="detail-grid">
+        <article class="safe-card"><small>{{ 'DEVICES.TYPE' | translate }}</small><strong>{{ item.type }}</strong></article>
+        <article class="safe-card"><small>{{ 'DEVICES.ZONE' | translate }}</small><strong>{{ item.zone }}</strong></article>
+        <article class="safe-card"><small>{{ 'DEVICES.CODE' | translate }}</small><strong>{{ item.code }}</strong></article>
+        <article class="safe-card"><small>{{ 'DEVICES.BATTERY' | translate }}</small><strong>{{ item.battery }}%</strong><div class="battery"><i [style.width.%]="item.battery"></i></div></article>
+        <article class="safe-card"><small>{{ 'DEVICES.REGISTERED' | translate }}</small><strong>Jan 15, 2025</strong></article>
+      </section>
+
+      <section class="bottom-grid">
+        <article class="safe-card activity-card">
+          <div class="activity-head">
+            <h3>{{ 'DEVICES.RECENT_ACTIVITY' | translate }}</h3>
+            <a class="safe-button-outline compact" routerLink="/history">{{ 'COMMON.DETAIL' | translate }}</a>
+          </div>
+          <ng-container *ngIf="relatedEvents().length; else emptyActivity">
+            <p *ngFor="let event of relatedEvents()">
+              <span class="activity-icon material-icons">{{ eventIcon(event.type) }}</span>
+              <span>
+                <strong>{{ event.title }}</strong>
+                <small>{{ event.description }}</small>
+              </span>
+              <small>{{ event.createdAt }}</small>
+            </p>
+          </ng-container>
+          <ng-template #emptyActivity>
+            <div class="empty-activity">
+              <span class="material-icons">info</span>
+              <strong>No unusual activity was reported.</strong>
+            </div>
+          </ng-template>
+        </article>
+
+        <article class="safe-card config-card">
+          <h3>{{ 'DEVICES.SENSOR_CONFIG' | translate }}</h3>
+          <label><span>{{ 'DEVICES.SENSIBILITY' | translate }}</span><select class="safe-select" name="sensibility" [(ngModel)]="sensorSensitivity" (ngModelChange)="saveLocalConfig()"><option>High</option><option>Medium</option><option>Low</option></select></label>
+          <label><span>{{ 'DEVICES.NIGHT_MODE' | translate }}</span><label class="toggle"><input type="checkbox" name="nightMode" [(ngModel)]="nightMode" (ngModelChange)="saveLocalConfig()"><span></span></label></label>
+          <label><span>{{ 'DEVICES.AUTO_ALERTS' | translate }}</span><label class="toggle"><input type="checkbox" name="autoAlerts" [(ngModel)]="autoAlerts" (ngModelChange)="saveLocalConfig()"><span></span></label></label>
+          <div class="tip">{{ 'DEVICES.DEVICE_READY' | translate }}</div>
+        </article>
+      </section>
+
+      <form class="safe-card edit-card" *ngIf="editing" (ngSubmit)="save(item)" aria-label="Edit device form">
+        <h3>{{ 'COMMON.EDIT' | translate }}</h3>
+        <div class="fields">
+          <label><span class="field-label">{{ 'DEVICES.NAME' | translate }}</span><input class="safe-input" name="editName" [(ngModel)]="draft.name"></label>
+          <label><span class="field-label">{{ 'DEVICES.ZONE' | translate }}</span><input class="safe-input" name="editZone" [(ngModel)]="draft.zone"></label>
+          <label><span class="field-label">{{ 'DEVICES.DESCRIPTION' | translate }}</span><input class="safe-input" name="editDescription" [(ngModel)]="draft.description"></label>
+        </div>
+        <button class="safe-button" type="submit">{{ 'COMMON.SAVE' | translate }}</button>
+      </form>
+    </section>
+
+<ng-template #deviceNotReady>
+  <section class="empty-detail" aria-label="Device detail loading">
+    <a class="safe-button-ghost" routerLink="/devices">
+      <span class="material-icons">arrow_back</span>{{ 'COMMON.BACK' | translate }}
+    </a>
+    <article class="safe-card">
+      <span class="material-icons">hourglass_empty</span>
+      <h2>Loading device information...</h2>
+      <p>Please wait a moment.</p>
+    </article>
+  </section>
+</ng-template>

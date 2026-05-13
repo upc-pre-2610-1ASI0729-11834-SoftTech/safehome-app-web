@@ -1,0 +1,217 @@
+.stepper  {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 20px 0 26px;
+  color: #8a98b0;
+  flex-wrap: wrap;
+}
+.step  {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.step span  {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #edf2f8;
+  font-weight: 900;
+}
+.step.current span, .step.done span  {
+  background: var(--primary);
+  color: #061832;
+}
+.step strong  {
+  font-size: 15px;
+}
+.step-line  {
+  width: 24px;
+  height: 2px;
+  background: #dbe4f0;
+}
+.form-layout  {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 330px;
+  gap: 22px;
+}
+.form-card, .summary  {
+  padding: 26px;
+  box-shadow: none;
+}
+.helper  {
+  margin: -4px 0 18px;
+  color: var(--muted);
+}
+.type-grid  {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin: 14px 0 26px;
+}
+.type-grid button  {
+  border: 1px solid var(--line);
+  background: #fff;
+  border-radius: 16px;
+  min-height: 130px;
+  display: grid;
+  place-items: center;
+  padding: 14px;
+  text-align: center;
+}
+.type-grid button.active  {
+  background: #dffff7;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(32, 208, 189, .2);
+}
+.type-grid .material-icons  {
+  font-size: 30px;
+  color: var(--primary-dark);
+}
+.type-grid small  {
+  color: var(--muted);
+}
+.fields  {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+.status-select  {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 22px 0;
+}
+.status-select label  {
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  font-weight: 800;
+}
+.status-select label.active  {
+  background: #e6fff8;
+  border-color: var(--primary);
+}
+.confirm-box  {
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  overflow: hidden;
+}
+.confirm-line  {
+  display: grid;
+  grid-template-columns: 160px 1fr;
+  gap: 14px;
+  padding: 14px 16px;
+  border-top: 1px solid var(--line);
+}
+.confirm-line:first-child  {
+  border-top: 0;
+}
+.confirm-line small  {
+  color: var(--muted);
+  text-transform: uppercase;
+  font-weight: 900;
+}
+.form-actions  {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 20px;
+}
+.summary  {
+  display: grid;
+  align-content: start;
+  gap: 12px;
+}
+.summary-icon  {
+  height: 150px;
+  border-radius: 16px;
+  background: #b8f0e4;
+  display: grid;
+  place-items: center;
+}
+.summary-icon span  {
+  font-size: 54px;
+  color: #06423d;
+}
+.summary p  {
+  background: #eef6ff;
+  border: 1px solid #bfd8ff;
+  border-radius: 14px;
+  padding: 14px;
+  color: #426189;
+}
+.safe-input[readonly]  {
+  background: #f6f9fc;
+  color: #59677f
+}
+.toast  {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  background: #07111f;
+  color: #fff;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-weight: 800;
+  z-index: 30
+}
+@media(max-width:1000px)  {
+  .form-layout  {
+    grid-template-columns: 1fr
+  }
+  .type-grid  {
+    grid-template-columns: repeat(2, 1fr)
+  }
+}
+@media(max-width:600px)  {
+  .fields, .status-select, .type-grid  {
+    grid-template-columns: 1fr
+  }
+  .confirm-line  {
+    grid-template-columns: 1fr
+  }
+}
+
+:host-context(body.dark-mode) .type-grid button {
+  background: #172033;
+  color: #dbe4f0;
+  border-color: #2c3950;
+}
+
+:host-context(body.dark-mode) .type-grid button.active {
+  background: #bffcf1;
+  color: #052b33;
+  border-color: var(--primary);
+}
+
+:host-context(body.dark-mode) .type-grid button.active small,
+:host-context(body.dark-mode) .type-grid button.active strong,
+:host-context(body.dark-mode) .type-grid button.active .material-icons {
+  color: #052b33;
+}
+
+:host-context(body.dark-mode) .status-select label {
+  background: #172033;
+  color: #dbe4f0;
+  border-color: #2c3950;
+}
+
+:host-context(body.dark-mode) .status-select label.active {
+  background: #bffcf1;
+  color: #052b33;
+  border-color: var(--primary);
+}
+
+:host-context(body.dark-mode) .summary p {
+  background: #111827;
+  color: #dbe4f0;
+  border-color: #2c3950;
+}
+
+:host-context(body.dark-mode) .safe-input[readonly] {
+  background: #111827;
+  color: #dbe4f0;
+}
