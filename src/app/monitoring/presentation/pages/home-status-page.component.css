@@ -1,0 +1,146 @@
+.page-head  {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: start;
+}
+.actions  {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.status-hero  {
+  border-radius: 28px;
+  background: linear-gradient(135deg, #aef3e9, #16cab7);
+  padding: 34px;
+  display: grid;
+  grid-template-columns: 100px 1fr;
+  gap: 24px;
+  align-items: center;
+  margin-bottom: 26px;
+}
+.status-hero > span  {
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .45);
+  display: grid;
+  place-items: center;
+  font-size: 44px;
+}
+.status-hero h2  {
+  font-size: 34px;
+  margin: 12px 0 6px;
+}
+.status-hero p  {
+  color: #31445f;
+}
+.stats  {
+  display: flex;
+  gap: 42px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+.stats strong  {
+  font-size: 20px;
+}
+.stats small  {
+  display: block;
+  color: #33546c;
+  font-size: 11px;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+h3  {
+  margin: 28px 0 14px;
+}
+.zone-grid  {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.zone-card  {
+  padding: 20px;
+  box-shadow: none;
+  display: grid;
+  gap: 14px;
+}
+.zone-card div:first-child  {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+.zone-card small  {
+  color: var(--muted);
+}
+.progress  {
+  height: 7px;
+  background: #eef3f9;
+  border-radius: 999px;
+}
+.progress i  {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: var(--primary);
+}
+.risk-grid  {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 14px;
+}
+.risk-card  {
+  padding: 18px;
+  text-align: center;
+  display: grid;
+  gap: 8px;
+  box-shadow: none;
+}
+.risk-card span  {
+  color: var(--primary-dark);
+}
+.incident-card  {
+  margin-top: 24px;
+  padding: 22px;
+  box-shadow: none;
+}
+.card-title  {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.incident-card a:not(.card-title a)  {
+  display: grid;
+  grid-template-columns: 14px 1fr auto;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+}
+.toast  {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+}
+@media(max-width:1000px)  {
+  .zone-grid  {
+    grid-template-columns: repeat(2, 1fr)
+  }
+  .risk-grid  {
+    grid-template-columns: repeat(2, 1fr)
+  }
+}
+@media(max-width:650px)  {
+  .page-head, .actions  {
+    flex-direction: column
+  }
+  .status-hero, .zone-grid, .risk-grid  {
+    grid-template-columns: 1fr
+  }
+  .incident-card a:not(.card-title a)  {
+    grid-template-columns: 14px 1fr
+  }
+  .incident-card small  {
+    grid-column: 2
+  }
+}
