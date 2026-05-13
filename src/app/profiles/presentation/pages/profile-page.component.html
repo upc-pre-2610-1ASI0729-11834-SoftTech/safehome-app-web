@@ -1,0 +1,94 @@
+<section aria-label="Profile page">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">{{ 'PROFILE.TITLE' | translate }}</h1>
+          <p class="page-subtitle">{{ 'PROFILE.SUBTITLE' | translate }}</p>
+        </div>
+        <div class="actions">
+          <button class="safe-button-outline" type="button" (click)="togglePassword()" aria-label="Change password">
+            <span class="material-icons">lock</span>{{ 'PROFILE.CHANGE_PASSWORD' | translate }}
+          </button>
+          <button class="safe-button" type="button" (click)="toggleEdit()" aria-label="Edit profile">
+            <span class="material-icons">edit</span>{{ editing ? ('COMMON.CANCEL' | translate) : ('PROFILE.EDIT' | translate) }}
+          </button>
+        </div>
+      </div>
+
+      <article class="profile-hero">
+        <span>{{ store.user().initials }}</span>
+        <div>
+          <h2>{{ store.user().name || '-' }}</h2>
+          <p>{{ 'PROFILE.ADMIN' | translate }} · {{ store.user().plan }}</p>
+          <small>{{ 'PROFILE.ACTIVE_ACCOUNT' | translate }} · {{ 'PROFILE.MEMBER_SINCE' | translate }} {{ store.user().memberSince }}</small>
+        </div>
+      </article>
+
+      <section class="profile-grid">
+        <main>
+          <article class="safe-card info-card">
+            <div class="card-title">
+              <div>
+                <h3>{{ 'PROFILE.PERSONAL_INFO' | translate }}</h3>
+                <p>{{ 'PROFILE.PERSONAL_SUBTITLE' | translate }}</p>
+              </div>
+              <button class="safe-button-outline compact" type="button" (click)="toggleEdit()"><span class="material-icons">edit</span>{{ 'COMMON.EDIT' | translate }}</button>
+            </div>
+            <div class="info-line"><span class="material-icons">person</span><small>{{ 'PROFILE.FULL_NAME' | translate }}</small><strong>{{ store.user().name || '-' }}</strong></div>
+            <div class="info-line"><span class="material-icons">mail</span><small>{{ 'PROFILE.EMAIL' | translate }}</small><strong>{{ store.user().email || '-' }}</strong><em>{{ 'PROFILE.VERIFIED' | translate }}</em></div>
+            <div class="info-line"><span class="material-icons">call</span><small>{{ 'PROFILE.PHONE' | translate }}</small><strong>{{ store.user().phone || '-' }}</strong><em>{{ 'PROFILE.VERIFIED' | translate }}</em></div>
+            <div class="info-line"><span class="material-icons">location_on</span><small>{{ 'PROFILE.ADDRESS' | translate }}</small><strong>{{ store.user().address || '-' }}</strong><small>{{ store.settings().homeName }}</small></div>
+          </article>
+
+          <form class="safe-card edit-card" *ngIf="editing" (ngSubmit)="saveProfile()" aria-label="Edit profile form">
+            <h3>{{ 'PROFILE.EDIT' | translate }}</h3>
+            <div class="fields">
+              <label><span class="field-label">{{ 'PROFILE.FULL_NAME' | translate }}</span><input class="safe-input" name="name" [(ngModel)]="draft.name"></label>
+              <label><span class="field-label">{{ 'PROFILE.EMAIL' | translate }}</span><input class="safe-input" name="email" [(ngModel)]="draft.email"></label>
+              <label><span class="field-label">{{ 'PROFILE.PHONE' | translate }}</span><input class="safe-input" name="phone" [(ngModel)]="draft.phone"></label>
+              <label><span class="field-label">{{ 'PROFILE.ADDRESS' | translate }}</span><input class="safe-input" name="address" [(ngModel)]="draft.address"></label>
+            </div>
+            <div class="form-actions"><button class="safe-button-outline" type="button" (click)="toggleEdit()">{{ 'COMMON.CANCEL' | translate }}</button><button class="safe-button" type="submit">{{ 'COMMON.SAVE' | translate }}</button></div>
+          </form>
+
+          <article class="safe-card security-card">
+            <div class="card-title"><div><h3>{{ 'PROFILE.SECURITY_TITLE' | translate }}</h3><p>{{ 'PROFILE.SECURITY_SUBTITLE' | translate }}</p></div></div>
+            <div class="security-row"><span class="material-icons">shield</span><div><strong>{{ 'PROFILE.PASSWORD_STATUS' | translate }}</strong><small>{{ 'PROFILE.PASSWORD_TEXT' | translate }}</small></div><button class="safe-button-outline compact" type="button" (click)="togglePassword()">{{ 'PROFILE.UPDATE' | translate }}</button></div>
+            <div class="security-row"><span class="material-icons">verified_user</span><div><strong>{{ 'PROFILE.TWO_FACTOR' | translate }}</strong><small>{{ store.settings().twoFactor ? ('PROFILE.ENABLED' | translate) : ('PROFILE.DISABLED' | translate) }}</small></div><label class="toggle"><input type="checkbox" [ngModel]="store.settings().twoFactor" name="profileTwoFactor" (ngModelChange)="updateSecurity('twoFactor', $event)"><span></span></label></div>
+            <div class="security-row"><span class="material-icons">notifications_active</span><div><strong>{{ 'PROFILE.LOGIN_ALERTS' | translate }}</strong><small>{{ store.settings().loginAlerts ? ('PROFILE.ENABLED' | translate) : ('PROFILE.DISABLED' | translate) }}</small></div><label class="toggle"><input type="checkbox" [ngModel]="store.settings().loginAlerts" name="profileLoginAlerts" (ngModelChange)="updateSecurity('loginAlerts', $event)"><span></span></label></div>
+          </article>
+
+          <form class="safe-card password-card" *ngIf="passwordMode" (ngSubmit)="savePassword()" aria-label="Change password form">
+            <h3>{{ 'PROFILE.CHANGE_PASSWORD' | translate }}</h3>
+            <div class="fields">
+              <label><span class="field-label">{{ 'PROFILE.NEW_PASSWORD' | translate }}</span><input class="safe-input" name="newPassword" type="password" [(ngModel)]="newPassword"></label>
+              <label><span class="field-label">{{ 'PROFILE.CONFIRM_PASSWORD' | translate }}</span><input class="safe-input" name="confirmPassword" type="password" [(ngModel)]="confirmPassword"></label>
+            </div>
+            <div class="form-actions"><button class="safe-button-outline" type="button" (click)="togglePassword()">{{ 'COMMON.CANCEL' | translate }}</button><button class="safe-button" type="submit">{{ 'COMMON.SAVE' | translate }}</button></div>
+          </form>
+        </main>
+
+        <aside>
+          <article class="safe-card activity">
+            <h3>{{ 'PROFILE.RECENT_ACTIVITY' | translate }}</h3>
+            <p *ngFor="let item of store.activities()"><span [class]="'status-dot ' + item.tone"></span><strong>{{ item.title }}</strong><small>{{ item.description }} · {{ item.time }}</small></p>
+          </article>
+          <article class="safe-card plan">
+            <h3>{{ 'PROFILE.PLAN' | translate }}</h3>
+            <strong>{{ store.user().plan }}</strong>
+            <p>{{ 'PROFILE.PLAN_TEXT' | translate }}</p>
+            <button class="safe-button" type="button" (click)="togglePlan()">{{ planOpen ? ('PROFILE.HIDE_PLAN' | translate) : ('PROFILE.VIEW_PLAN' | translate) }}</button>
+            <div class="plan-details" *ngIf="planOpen">
+              <p><strong>{{ 'PROFILE.PLAN_LIMIT' | translate }}</strong></p>
+              <p>{{ 'PROFILE.PLAN_SUPPORT' | translate }}</p>
+              <p>{{ 'PROFILE.PLAN_HISTORY' | translate }}</p>
+            </div>
+          </article>
+          <article class="safe-card danger-zone">
+            <h3>{{ 'PROFILE.DANGER_ZONE' | translate }}</h3>
+            <p>{{ 'PROFILE.DANGER_TEXT' | translate }}</p>
+            <button class="safe-button-danger" type="button" (click)="showMessage('MESSAGES.SAVED')">{{ 'PROFILE.REQUEST_REVIEW' | translate }}</button>
+          </article>
+        </aside>
+      </section>
+      <p *ngIf="message" class="toast">{{ message }}</p>
+    </section>

@@ -1,0 +1,66 @@
+<section aria-label="Settings page">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">{{ 'SETTINGS.TITLE' | translate }}</h1>
+          <p class="page-subtitle">{{ 'SETTINGS.SUBTITLE' | translate }}</p>
+        </div>
+        <button class="safe-button" type="button" (click)="saveAndNotify()" aria-label="Save settings">{{ 'COMMON.SAVE' | translate }}</button>
+      </div>
+
+      <section class="settings-grid">
+        <div>
+          <article class="safe-card settings-card">
+            <h3><span class="material-icons">notifications</span>{{ 'SETTINGS.NOTIFICATIONS' | translate }}</h3>
+            <label><span>{{ 'SETTINGS.EMAIL_NOTIFICATIONS' | translate }}</span><label class="toggle"><input type="checkbox" name="emailNotifications" [(ngModel)]="draft.emailNotifications" (ngModelChange)="saveAll()"><span></span></label></label>
+            <label><span>{{ 'SETTINGS.PUSH_NOTIFICATIONS' | translate }}</span><label class="toggle"><input type="checkbox" name="pushNotifications" [(ngModel)]="draft.pushNotifications" (ngModelChange)="saveAll()"><span></span></label></label>
+            <label><span>{{ 'SETTINGS.SYSTEM_NOTIFICATIONS' | translate }}</span><label class="toggle"><input type="checkbox" name="systemNotifications" [(ngModel)]="draft.systemNotifications" (ngModelChange)="saveAll()"><span></span></label></label>
+            <label><span>{{ 'SETTINGS.EMAIL_SUMMARY' | translate }}</span><label class="toggle"><input type="checkbox" name="emailSummary" [(ngModel)]="draft.emailSummary" (ngModelChange)="saveAll()"><span></span></label></label>
+            <label><span>{{ 'SETTINGS.SENSIBILITY' | translate }}</span><select class="safe-select" name="sensibility" [(ngModel)]="draft.sensibility" (ngModelChange)="saveAll()"><option>Low</option><option>Medium</option><option>High</option></select></label>
+            <label><span>{{ 'SETTINGS.UPDATE_TIME' | translate }}</span><select class="safe-select" name="updateTime" [(ngModel)]="draft.updateTime" (ngModelChange)="saveAll()"><option>10 seconds</option><option>30 seconds</option><option>1 minute</option></select></label>
+          </article>
+
+          <article class="safe-card settings-card">
+            <h3><span class="material-icons">security</span>{{ 'SETTINGS.ACCOUNT_SECURITY' | translate }}</h3>
+            <label><span>{{ 'SETTINGS.TWO_FACTOR' | translate }}</span><label class="toggle"><input type="checkbox" name="twoFactor" [(ngModel)]="draft.twoFactor" (ngModelChange)="saveAll()"><span></span></label></label>
+            <label><span>{{ 'SETTINGS.AUTO_LOGOUT' | translate }}</span><label class="toggle"><input type="checkbox" name="autoLogout" [(ngModel)]="draft.autoLogout" (ngModelChange)="saveAll()"><span></span></label></label>
+            <label><span>{{ 'SETTINGS.LOGIN_ALERTS' | translate }}</span><label class="toggle"><input type="checkbox" name="loginAlerts" [(ngModel)]="draft.loginAlerts" (ngModelChange)="saveAll()"><span></span></label></label>
+            <label><span>{{ 'SETTINGS.SESSION_DURATION' | translate }}</span><select class="safe-select" name="sessionDuration" [(ngModel)]="draft.sessionDuration" (ngModelChange)="saveAll()"><option>4 hours</option><option>8 hours</option><option>12 hours</option></select></label>
+          </article>
+        </div>
+
+        <div>
+          <article class="safe-card settings-card">
+            <h3><span class="material-icons">home</span>{{ 'SETTINGS.HOME_CONFIG' | translate }}</h3>
+            <label class="stack"><span>{{ 'SETTINGS.HOME_NAME' | translate }}</span><input class="safe-input" name="homeName" [(ngModel)]="draft.homeName" (ngModelChange)="saveAll()"></label>
+            <label><span>{{ 'SETTINGS.HIDDEN_SENSORS' | translate }}</span><label class="toggle"><input type="checkbox" name="hiddenSensors" [(ngModel)]="draft.hiddenSensors" (ngModelChange)="saveAll()"><span></span></label></label>
+            <label><span>{{ 'SETTINGS.AUTO_ARM' | translate }}</span><label class="toggle"><input type="checkbox" name="autoArm" [(ngModel)]="draft.autoArm" (ngModelChange)="saveAll()"><span></span></label></label>
+            <label><span>{{ 'SETTINGS.ZONE_REVIEW' | translate }}</span><select class="safe-select" name="zoneReview" [(ngModel)]="draft.zoneReviewInterval" (ngModelChange)="saveAll()"><option>3 hours</option><option>6 hours</option><option>12 hours</option></select></label>
+            <label><span>{{ 'SETTINGS.HISTORY_RETENTION' | translate }}</span><select class="safe-select" name="historyRetention" [(ngModel)]="draft.historyRetention" (ngModelChange)="saveAll()"><option>3 months</option><option>6 months</option><option>12 months</option></select></label>
+          </article>
+
+          <article class="safe-card settings-card zones-card">
+            <h3><span class="material-icons">dashboard</span>{{ 'SETTINGS.ZONES' | translate }}</h3>
+            <div class="zone-line" *ngFor="let zone of store.zones()">
+              <div>
+                <strong>{{ zone.name }}</strong>
+                <small>{{ zone.deviceCount }} {{ 'STATUS.DEVICES' | translate }} · {{ zone.signal }}%</small>
+              </div>
+              <select class="safe-select status-select" [ngModel]="zone.status" [name]="'zoneStatus' + zone.id" (ngModelChange)="updateZone(zone, $event)">
+                <option value="safe">{{ 'STATUS_LABELS.SAFE' | translate }}</option>
+                <option value="warning">{{ 'STATUS_LABELS.WARNING' | translate }}</option>
+                <option value="critical">{{ 'STATUS_LABELS.CRITICAL' | translate }}</option>
+              </select>
+            </div>
+            <button class="safe-button-outline full" type="button" (click)="addZone()"><span class="material-icons">add</span>{{ 'SETTINGS.ADD_ZONE' | translate }}</button>
+          </article>
+
+          <article class="safe-card settings-card">
+            <h3><span class="material-icons">palette</span>{{ 'SETTINGS.APPEARANCE' | translate }}</h3>
+            <label><span>{{ 'SETTINGS.DARK_MODE' | translate }}</span><label class="toggle"><input type="checkbox" name="darkMode" [(ngModel)]="draft.darkMode" (ngModelChange)="saveAll()"><span></span></label></label>
+            <div class="language-block"><span>{{ 'SETTINGS.LANGUAGE' | translate }}</span><app-language-switcher /></div>
+            <button class="safe-button-danger" type="button" (click)="restoreDefaultConfig()">{{ 'SETTINGS.RESET' | translate }}</button>
+          </article>
+        </div>
+      </section>
+      <p *ngIf="message" class="toast">{{ message }}</p>
+    </section>

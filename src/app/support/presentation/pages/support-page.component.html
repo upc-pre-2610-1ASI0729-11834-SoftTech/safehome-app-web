@@ -1,0 +1,59 @@
+<section aria-label="Support page">
+      <article class="support-hero">
+        <h1>{{ 'SUPPORT.HERO' | translate }}</h1>
+        <p>{{ 'SUPPORT.HERO_TEXT' | translate }}</p>
+        <label aria-label="Search support categories">
+          <span class="material-icons">search</span>
+          <input type="search" [(ngModel)]="query" [placeholder]="'SUPPORT.SEARCH' | translate">
+        </label>
+      </article>
+
+      <section class="category-grid" aria-label="Support categories">
+        <article *ngFor="let category of filteredCategories()" class="safe-card category" [class.selected]="selected()?.titleKey === category.titleKey">
+          <span class="material-icons">{{ category.icon }}</span>
+          <h3>{{ category.titleKey | translate }}</h3>
+          <p>{{ category.textKey | translate }}</p>
+          <button type="button" (click)="openArticles(category)">{{ 'SUPPORT.SEE_ARTICLES' | translate }}</button>
+        </article>
+      </section>
+
+      <article class="safe-card empty" *ngIf="filteredCategories().length === 0">
+        <span class="material-icons">search_off</span>
+        <strong>{{ 'SUPPORT.NO_RESULTS' | translate }}</strong>
+        <p>{{ 'SUPPORT.NO_RESULTS_TEXT' | translate }}</p>
+      </article>
+
+      <article class="safe-card article-panel" *ngIf="selected() as category" aria-label="Support articles">
+        <div class="article-head">
+          <div>
+            <span class="material-icons">{{ category.icon }}</span>
+            <h2>{{ category.titleKey | translate }}</h2>
+            <p>{{ category.textKey | translate }}</p>
+          </div>
+          <button class="safe-button-outline compact" type="button" (click)="closeArticles()">{{ 'COMMON.CANCEL' | translate }}</button>
+        </div>
+        <div class="mini-articles">
+          <button *ngFor="let articleKey of category.articleKeys" type="button" [class.active]="openArticle() === articleKey" (click)="toggleArticle(articleKey)">
+            <strong>{{ ('SUPPORT_ARTICLES.' + articleKey + '.TITLE') | translate }}</strong>
+            <small>{{ ('SUPPORT_ARTICLES.' + articleKey + '.SUMMARY') | translate }}</small>
+            <p *ngIf="openArticle() === articleKey">{{ ('SUPPORT_ARTICLES.' + articleKey + '.BODY') | translate }}</p>
+          </button>
+        </div>
+      </article>
+
+      <article class="safe-card faq">
+        <h3>{{ 'SUPPORT.TOP_ARTICLES' | translate }}</h3>
+        <button *ngFor="let question of filteredQuestions()" type="button" (click)="openQuestion.set(openQuestion() === question ? '' : question)">
+          {{ question | translate }} <span>{{ openQuestion() === question ? '−' : '+' }}</span>
+          <p *ngIf="openQuestion() === question">{{ answerForQuestion(question) | translate }}</p>
+        </button>
+      </article>
+
+      <article class="black-box">
+        <div>
+          <h3>{{ 'SUPPORT.NOT_FOUND' | translate }}</h3>
+          <p>{{ 'SUPPORT.NOT_FOUND_TEXT' | translate }}</p>
+        </div>
+        <a class="safe-button" routerLink="/support/message">{{ 'SUPPORT.CONTACT' | translate }}</a>
+      </article>
+    </section>
