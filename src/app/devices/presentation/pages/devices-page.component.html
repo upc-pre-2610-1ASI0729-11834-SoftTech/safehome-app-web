@@ -1,0 +1,131 @@
+<section aria-label="Devices page">
+  <div class="page-head">
+    <div>
+      <h1 class="page-title">{{ 'DEVICES.TITLE' | translate }}</h1>
+      <p class="page-subtitle">{{ 'DEVICES.SUBTITLE' | translate }}</p>
+    </div>
+
+    <div class="actions">
+      <button class="safe-button-outline" type="button" (click)="exportData()">
+        <span class="material-icons">download</span>
+        {{ 'COMMON.EXPORT' | translate }}
+      </button>
+
+      <a class="safe-button" routerLink="/devices/new">
+        <span class="material-icons">add</span>
+        {{ 'DEVICES.ADD' | translate }}
+      </a>
+    </div>
+  </div>
+
+  <section class="summary-grid">
+    <article class="safe-card">
+      <strong>{{ store.devices().length }}</strong>
+      <small>{{ 'DEVICES.TOTAL' | translate }}</small>
+    </article>
+
+    <article class="safe-card">
+      <strong>{{ store.activeDevices() }}</strong>
+      <small>{{ 'DEVICES.ACTIVE' | translate }}</small>
+    </article>
+
+    <article class="safe-card">
+      <strong>{{ store.warningDevices() }}</strong>
+      <small>{{ 'DEVICES.WARNING' | translate }}</small>
+    </article>
+
+    <article class="safe-card">
+      <strong>{{ store.offlineDevices() }}</strong>
+      <small>{{ 'DEVICES.OFFLINE' | translate }}</small>
+    </article>
+  </section>
+
+  <section class="devices-layout">
+    <aside class="safe-card filter-panel">
+      <span class="panel-label">{{ 'COMMON.FILTER' | translate }}</span>
+      <h2>{{ selectedFilterLabel() | translate }}</h2>
+      <p>{{ filteredDevices().length }} {{ 'DEVICES.TOTAL' | translate }}</p>
+
+      <div class="filters" aria-label="Device filters">
+        <button
+          *ngFor="let item of filterOptions"
+          type="button"
+          [class.active]="filter() === item.value"
+          (click)="changeFilter(item.value)">
+          {{ item.labelKey | translate }}
+        </button>
+      </div>
+    </aside>
+
+    <div class="device-list-area">
+      <div class="list-head">
+        <div>
+          <span class="panel-label">{{ 'DEVICES.TITLE' | translate }}</span>
+          <h2>{{ filteredDevices().length }} {{ 'DEVICES.TOTAL' | translate }}</h2>
+        </div>
+
+        <small>
+          {{ 'DEVICES.PAGE' | translate }} {{ currentPage() }} / {{ totalPages() }}
+        </small>
+      </div>
+
+      <section class="device-grid">
+        <article *ngFor="let device of paginatedDevices()" class="safe-card device-card">
+          <div class="device-top">
+            <span class="material-icons">{{ icon(device.type) }}</span>
+            <span [class]="'badge ' + statusClass(device.status)">
+              ● {{ statusLabel(device.status) | translate }}
+            </span>
+          </div>
+
+          <h3>{{ device.name }}</h3>
+          <p>{{ device.zone }}</p>
+          <small>{{ device.description }}</small>
+
+          <div class="battery">
+            <i [style.width.%]="device.battery"></i>
+          </div>
+
+          <div class="device-actions">
+            <a class="safe-button-outline" [routerLink]="['/devices', device.id]">
+              {{ 'COMMON.DETAIL' | translate }}
+            </a>
+
+            <label class="toggle" aria-label="Toggle device">
+              <input
+                type="checkbox"
+                [checked]="device.status === 'active'"
+                (change)="store.toggleDevice(device.id)">
+              <span></span>
+            </label>
+          </div>
+        </article>
+      </section>
+
+      <div class="empty-state" *ngIf="!filteredDevices().length">
+        <span class="material-icons">sensors_off</span>
+        <strong>{{ 'DEVICES.NO_DEVICES' | translate }}</strong>
+      </div>
+
+      <nav class="pagination" aria-label="Device pagination" *ngIf="totalPages() > 1">
+        <button type="button" (click)="goToPage(currentPage() - 1)" [disabled]="currentPage() === 1">
+          <span class="material-icons">chevron_left</span>
+        </button>
+
+        <button
+          *ngFor="let page of pageNumbers()"
+          type="button"
+          [class.active]="currentPage() === page"
+          (click)="goToPage(page)">
+          {{ page }}
+        </button>
+
+        <button type="button" (click)="goToPage(currentPage() + 1)" [disabled]="currentPage() === totalPages()">
+          <span class="material-icons">chevron_right</span>
+        </button>
+      </nav>
+    </div>
+  </section>
+
+  <p *ngIf="toast()" class="toast">{{ toast() }}</p>
+</section>

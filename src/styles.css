@@ -248,3 +248,51 @@ body.dark-mode .safe-button-outline  {
 body.dark-mode .black-box  {
   background: #05070c;
 }
+
+body.dark-mode .alert-row > .material-icons {
+  background: #20314b !important;
+  color: #7ee6da !important;
+  border: 1px solid #2c3950 !important;
+}
+
+body.dark-mode .alert-row.danger > .material-icons {
+  color: #ff8ea0 !important;
+  background: #3a2332 !important;
+}
+
+body.dark-mode .alert-row.warning > .material-icons {
+  color: #ffd56a !important;
+  background: #3a321f !important;
+}
+
+body.dark-mode .alert-row.info > .material-icons {
+  color: #9fb3ff !important;
+  background: #243054 !important;
+}
+
+body.dark-mode .alert-row.success > .material-icons {
+  color: #7ee6da !important;
+  background: #143b45 !important;
+}
+
+body.dark-mode .status-hero > .material-icons {
+  background: rgba(6, 24, 50, .22) !important;
+  color: #061832 !important;
+}
+
+body.dark-mode .risk-card > .material-icons {
+  background: #20314b !important;
+  color: #7ee6da !important;
+  border: 1px solid #2c3950 !important;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: inline-grid;
+  place-items: center;
+  margin: 0 auto;
+}
+
+body.dark-mode .zone-card .badge,
+body.dark-mode .status-hero .badge {
+  color: #061832 !important;
+}

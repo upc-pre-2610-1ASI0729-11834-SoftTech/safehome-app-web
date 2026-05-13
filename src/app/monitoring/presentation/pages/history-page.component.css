@@ -1,0 +1,135 @@
+.page-head  {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 16px
+}
+.filter-card  {
+  padding: 18px;
+  display: grid;
+  grid-template-columns: minmax(260px, 1fr)170px 180px 200px;
+  gap: 12px;
+  margin-bottom: 20px;
+  box-shadow: none
+}
+.search-box  {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #d8e2ee;
+  border-radius: 12px;
+  background: #fff;
+  padding: 0 14px
+}
+.search-box input  {
+  border: 0;
+  outline: 0;
+  width: 100%;
+  min-height: 48px;
+  background: transparent
+}
+.table-card  {
+  padding: 18px;
+  box-shadow: none
+}
+.table-wrap  {
+  overflow: visible
+}
+.table-card table  {
+  table-layout: fixed
+}
+.table-card th, .table-card td  {
+  white-space: normal;
+  vertical-align: top;
+  font-size: 13px;
+  line-height: 1.35;
+  padding: 12px 8px
+}
+.table-card th:nth-child(1)  {
+  width: 12%
+}
+.table-card th:nth-child(2)  {
+  width: 18%
+}
+.table-card th:nth-child(3)  {
+  width: 14%
+}
+.table-card th:nth-child(4)  {
+  width: 13%
+}
+.table-card th:nth-child(5)  {
+  width: 11%
+}
+.table-card th:nth-child(6)  {
+  width: 11%
+}
+.table-card th:nth-child(7)  {
+  width: 14%
+}
+.table-card th:nth-child(8)  {
+  width: 7%
+}
+.compact  {
+  min-height: 32px;
+  padding: 0 10px;
+  font-size: 12px
+}
+.description-cell  {
+  color: var(--muted)
+}
+.status-pill  {
+  display: inline-flex;
+  border-radius: 999px;
+  padding: 5px 9px;
+  font-size: 11px;
+  font-weight: 900
+}
+.status-pill.active  {
+  background: #ffe8ec;
+  color: var(--danger)
+}
+.status-pill.attended  {
+  background: #edf1ff;
+  color: var(--info)
+}
+.status-pill.resolved  {
+  background: #e2fff3;
+  color: var(--success)
+}
+.table-footer  {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 6px 4px;
+  color: var(--muted);
+  font-weight: 800
+}
+.toast  {
+  position: fixed;
+  right: 24px;
+  bottom: 24px
+}
+@media(max-width:1100px)  {
+  .filter-card  {
+    grid-template-columns: 1fr 1fr
+  }
+  .table-card th, .table-card td  {
+    font-size: 12px;
+    padding: 10px 6px
+  }
+}
+@media(max-width:720px)  {
+  .filter-card  {
+    grid-template-columns: 1fr
+  }
+  .page-head  {
+    flex-direction: column
+  }
+  .table-card  {
+    overflow-x: auto
+  }
+  .table-card .table-wrap  {
+    min-width: 860px
+  }
+}

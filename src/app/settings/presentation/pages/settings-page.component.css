@@ -1,0 +1,95 @@
+.page-head  {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 16px
+}
+.settings-grid  {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px
+}
+.settings-card  {
+  padding: 24px;
+  box-shadow: none;
+  margin-bottom: 22px
+}
+.settings-card h3  {
+  margin: 0 0 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px
+}
+.settings-card h3 .material-icons  {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #d6fff7;
+  color: var(--primary-dark);
+  display: grid;
+  place-items: center
+}
+.settings-card label, .language-block  {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 0;
+  border-top: 1px solid var(--line);
+  color: var(--text);
+  font-weight: 800
+}
+.settings-card label.stack  {
+  display: grid;
+  gap: 8px
+}
+.settings-card select  {
+  width: 160px
+}
+.zone-line  {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 14px;
+  border-top: 1px solid var(--line);
+  padding: 12px 0
+}
+.zone-line small  {
+  display: block;
+  color: var(--muted);
+  margin-top: 3px
+}
+.status-select  {
+  min-height: 36px;
+  width: 130px
+}
+.full  {
+  width: 100%;
+  margin-top: 12px
+}
+.safe-button-danger  {
+  margin-top: 18px;
+  width: 100%
+}
+.toast  {
+  position: fixed;
+  right: 24px;
+  bottom: 24px
+}
+@media(max-width:950px)  {
+  .settings-grid  {
+    grid-template-columns: 1fr
+  }
+}
+@media(max-width:600px)  {
+  .page-head  {
+    flex-direction: column
+  }
+  .settings-card label, .language-block, .zone-line  {
+    align-items: start;
+    flex-direction: column
+  }
+  .settings-card select, .status-select  {
+    width: 100%
+  }
+}

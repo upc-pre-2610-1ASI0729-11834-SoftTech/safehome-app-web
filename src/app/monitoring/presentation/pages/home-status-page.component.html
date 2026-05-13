@@ -1,0 +1,47 @@
+<section aria-label="General home status page">
+      <div class="page-head">
+        <div><h1 class="page-title">{{ 'STATUS.TITLE' | translate }}</h1><p class="page-subtitle">{{ 'STATUS.SUBTITLE' | translate }}</p></div>
+        <div class="actions">
+          <button class="safe-button-outline" type="button" (click)="exportReport()"><span class="material-icons">download</span>{{ 'STATUS.EXPORT_REPORT' | translate }}</button>
+          <a class="safe-button" routerLink="/devices">{{ 'STATUS.VIEW_DEVICES' | translate }}</a>
+        </div>
+      </div>
+
+      <article class="status-hero">
+        <span class="material-icons">verified_user</span>
+        <div>
+          <small class="badge success">● {{ 'STATUS.SECURE' | translate }}</small>
+          <h2>{{ 'STATUS.HOME_SECURE' | translate }}</h2>
+          <p>{{ 'STATUS.HOME_TEXT' | translate }}</p>
+          <div class="stats">
+            <strong>{{ store.activeDevices() }}/{{ store.devices().length }}<small>{{ 'STATUS.ACTIVE_DEVICES' | translate }}</small></strong>
+            <strong>{{ store.zones().length }}/6<small>{{ 'STATUS.MONITORED_ZONES' | translate }}</small></strong>
+            <strong>{{ store.uptime() }}<small>{{ 'STATUS.UPTIME' | translate }}</small></strong>
+          </div>
+        </div>
+      </article>
+
+      <h3>{{ 'STATUS.ZONES' | translate }}</h3>
+      <section class="zone-grid">
+        <article *ngFor="let zone of store.zones()" class="safe-card zone-card">
+          <div><strong>{{ zone.name }}</strong><small>{{ zone.deviceCount }} {{ 'STATUS.DEVICES' | translate }}</small></div>
+          <span [class]="'badge ' + zoneClass(zone.status)">{{ zoneStatusLabel(zone.status) | translate }}</span>
+          <div class="progress"><i [style.width.%]="zone.signal"></i></div>
+        </article>
+      </section>
+
+      <h3>{{ 'STATUS.RISK_SUMMARY' | translate }}</h3>
+      <section class="risk-grid">
+        <article *ngFor="let risk of risks" class="safe-card risk-card">
+          <span class="material-icons">{{ risk.icon }}</span><strong>{{ risk.titleKey | translate }}</strong><small>{{ risk.textKey | translate }}</small>
+        </article>
+      </section>
+
+      <article class="safe-card incident-card">
+        <div class="card-title"><h3>{{ 'STATUS.LAST_INCIDENTS' | translate }}</h3><a routerLink="/history">{{ 'STATUS.SEE_HISTORY' | translate }}</a></div>
+        <a *ngFor="let event of store.events().slice(0,3)" [routerLink]="['/alerts', event.id]">
+          <span [class]="'status-dot ' + tone(event.severity)"></span><strong>{{ translatedEventTitle(event.id, event.title) }}</strong><small>{{ event.createdAt }}</small>
+        </a>
+      </article>
+      <p *ngIf="toast()" class="toast">{{ toast() }}</p>
+    </section>

@@ -1,0 +1,42 @@
+<section aria-label="Real time events page">
+      <div class="page-head">
+        <div><h1 class="page-title">{{ 'EVENTS.TITLE' | translate }}</h1><p class="page-subtitle">{{ 'EVENTS.SUBTITLE' | translate }}</p></div>
+        <div class="actions">
+          <button class="safe-button-outline" type="button" (click)="showFilters.set(!showFilters())"><span class="material-icons">filter_list</span>{{ 'COMMON.FILTER' | translate }}</button>
+          <button class="safe-button" type="button" (click)="paused.set(!paused())">{{ (paused() ? 'EVENTS.RESUME' : 'EVENTS.PAUSE') | translate }}</button>
+        </div>
+      </div>
+
+      <div *ngIf="showFilters()" class="filters" aria-label="Event filters">
+        <button type="button" [class.active]="filter() === 'all'" (click)="filter.set('all')">{{ 'DEVICES.FILTER_ALL' | translate }}</button>
+        <button type="button" [class.active]="filter() === 'active'" (click)="filter.set('active')">{{ 'STATUS_LABELS.ACTIVE' | translate }}</button>
+        <button type="button" [class.active]="filter() === 'critical'" (click)="filter.set('critical')">{{ 'PRIORITY.CRITICAL' | translate }}</button>
+        <button type="button" [class.active]="filter() === 'medium'" (click)="filter.set('medium')">{{ 'PRIORITY.MEDIUM' | translate }}</button>
+        <button type="button" [class.active]="filter() === 'resolved'" (click)="filter.set('resolved')">{{ 'STATUS_LABELS.RESOLVED' | translate }}</button>
+      </div>
+
+      <section class="summary-grid">
+        <article class="safe-card summary-card"><span class="summary-icon success material-icons">bolt</span><strong>{{ store.totalEvents() }}</strong><small>{{ 'EVENTS.TODAY' | translate }}</small></article>
+        <article class="safe-card summary-card"><span class="summary-icon danger material-icons">warning</span><strong>{{ criticalCount() }}</strong><small>{{ 'EVENTS.CRITICAL' | translate }}</small></article>
+        <article class="safe-card summary-card"><span class="summary-icon aqua material-icons">home</span><strong>{{ store.zones().length }}</strong><small>{{ 'EVENTS.ONLINE_ZONES' | translate }}</small></article>
+        <article class="safe-card summary-card"><span class="summary-icon info material-icons">devices_other</span><strong>{{ store.activeDevices() }}</strong><small>{{ 'EVENTS.ACTIVE_DEVICES' | translate }}</small></article>
+      </section>
+
+      <section class="live-grid">
+        <article class="safe-card feed">
+          <div class="card-title"><h3>{{ 'EVENTS.FEED' | translate }}</h3><span class="badge success">● {{ paused() ? ('EVENTS.PAUSED' | translate) : ('EVENTS.ACTIVE' | translate) }}</span></div>
+          <a *ngFor="let event of visibleEvents()" [routerLink]="['/events', event.id]" class="feed-row">
+            <span [class]="'feed-icon material-icons ' + tone(event.severity)">{{ eventIcon(event.type) }}</span>
+            <div><strong>{{ translatedEventTitle(event.id, event.title) }}</strong><small>{{ event.device }} · {{ event.zone }}</small></div>
+            <em>{{ statusLabel(event.status) | translate }}</em>
+          </a>
+          <button *ngIf="visibleEvents().length < filteredEvents().length" class="safe-button-outline load" type="button" (click)="limit.set(limit()+3)">{{ 'EVENTS.LOAD_MORE' | translate }}</button>
+        </article>
+
+        <aside>
+          <article class="safe-card side"><h3>{{ 'EVENTS.LIVE_SUMMARY' | translate }}</h3><p><strong>{{ store.totalEvents() }}</strong>{{ 'EVENTS.TODAY' | translate }}</p><p><strong>{{ criticalCount() }}</strong>{{ 'EVENTS.CRITICAL' | translate }}</p><p><strong>14:32</strong>{{ 'EVENTS.LAST_UPDATE' | translate }}</p></article>
+          <article class="safe-card side"><h3>{{ 'EVENTS.ACTIVITY_ZONE' | translate }}</h3><p *ngFor="let zone of store.zones()"><span [class]="'status-dot ' + zoneTone(zone.status)"></span>{{ zone.name }}<small>{{ zoneStatusLabel(zone.status) | translate }}</small></p></article>
+          <article class="tip">{{ 'EVENTS.SYSTEM_TIP' | translate }}</article>
+        </aside>
+      </section>
+    </section>
