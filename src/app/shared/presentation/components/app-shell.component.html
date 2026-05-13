@@ -1,0 +1,41 @@
+<div class="app-layout">
+      <aside class="sidebar" aria-label="SafeHome sidebar navigation">
+        <a class="brand" routerLink="/dashboard" aria-label="Go to dashboard">
+          <img class="brand-logo" src="assets/images/safehome-logo.png" alt="SafeHome logo"><span>SafeHome</span>
+        </a>
+
+        <nav class="menu" aria-label="Main navigation">
+          <p>{{ 'NAV.MAIN' | translate }}</p>
+          <a routerLink="/dashboard" routerLinkActive="active"><span class="material-icons">grid_view</span>{{ 'NAV.DASHBOARD' | translate }}</a>
+          <a routerLink="/home-status" routerLinkActive="active"><span class="material-icons">shield</span>{{ 'NAV.HOME_STATUS' | translate }}</a>
+          <a routerLink="/devices" routerLinkActive="active"><span class="material-icons">devices_other</span>{{ 'NAV.DEVICES' | translate }}</a>
+          <a routerLink="/alerts" routerLinkActive="active"><span class="material-icons">notifications_none</span>{{ 'NAV.ALERTS' | translate }}<small *ngIf="store.pendingAlerts()">{{ store.pendingAlerts() }}</small></a>
+          <a routerLink="/events" routerLinkActive="active"><span class="material-icons">bolt</span>{{ 'NAV.REAL_TIME_EVENTS' | translate }}</a>
+          <a routerLink="/history" routerLinkActive="active"><span class="material-icons">history</span>{{ 'NAV.HISTORY' | translate }}</a>
+          <p>{{ 'NAV.ACCOUNT' | translate }}</p>
+          <a routerLink="/profile" routerLinkActive="active"><span class="material-icons">person_outline</span>{{ 'NAV.PROFILE' | translate }}</a>
+          <a routerLink="/settings" routerLinkActive="active"><span class="material-icons">settings</span>{{ 'NAV.SETTINGS' | translate }}</a>
+          <a routerLink="/support" routerLinkActive="active"><span class="material-icons">help_outline</span>{{ 'NAV.SUPPORT' | translate }}</a>
+        </nav>
+
+        <button class="logout" type="button" (click)="logout()" aria-label="Log out">
+          <span class="material-icons">logout</span>{{ 'NAV.LOGOUT' | translate }}
+        </button>
+      </aside>
+
+      <main class="content">
+        <header class="topbar" aria-label="Application topbar">
+          <div class="top-actions">
+            <app-language-switcher />
+            <button class="bell" type="button" routerLink="/alerts" aria-label="Open alerts"><span class="material-icons">notifications_none</span></button>
+            <button class="user" type="button" routerLink="/profile" aria-label="Open profile">
+              <span>{{ store.user().initials }}</span>
+              <strong>{{ shortName() }}</strong>
+              <small>{{ store.user().plan }}</small>
+            </button>
+          </div>
+        </header>
+
+        <section class="route-box"><router-outlet /></section>
+      </main>
+    </div>

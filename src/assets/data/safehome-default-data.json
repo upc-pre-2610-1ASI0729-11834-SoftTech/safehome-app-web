@@ -1,45 +1,55 @@
 {
-  "teamCredentials": [
-    {
-      "id": 1,
-      "email": "safehometeam@gmail.com",
-      "password": "12345"
-    }
-  ],
-  "currentUser": [
-    {
-      "id": 1,
-      "name": "SafeHome Team",
-      "email": "safehometeam@gmail.com",
-      "phone": "+51 987 654 321",
-      "address": "Av. Los Álamos 142, Lima",
-      "plan": "SafeHome Pro",
-      "initials": "ST",
-      "memberSince": "January 2025"
-    }
-  ],
-  "settings": [
-    {
-      "id": 1,
-      "homeName": "Main home",
-      "emailNotifications": true,
-      "pushNotifications": true,
-      "systemNotifications": true,
-      "emailSummary": false,
-      "autoArm": true,
-      "darkMode": false,
-      "twoFactor": true,
-      "autoLogout": true,
-      "loginAlerts": true,
-      "sensibility": "Medium",
-      "updateTime": "30 seconds",
-      "sessionDuration": "8 hours",
-      "zoneReviewInterval": "6 hours",
-      "historyRetention": "6 months",
-      "hiddenSensors": false,
-      "language": "en"
-    }
-  ],
+  "teamCredentials": {
+    "email": "safehometeam@gmail.com",
+    "password": "12345"
+  },
+  "user": {
+    "name": "SafeHome Team",
+    "email": "safehometeam@gmail.com",
+    "phone": "+51 987 654 321",
+    "address": "Av. Los Álamos 142, Lima",
+    "plan": "SafeHome Pro",
+    "initials": "ST",
+    "memberSince": "January 2025"
+  },
+  "blankSettings": {
+    "homeName": "",
+    "emailNotifications": true,
+    "pushNotifications": true,
+    "systemNotifications": true,
+    "emailSummary": false,
+    "autoArm": true,
+    "darkMode": false,
+    "twoFactor": false,
+    "autoLogout": true,
+    "loginAlerts": true,
+    "sensibility": "Medium",
+    "updateTime": "30 seconds",
+    "sessionDuration": "8 hours",
+    "zoneReviewInterval": "6 hours",
+    "historyRetention": "6 months",
+    "hiddenSensors": false,
+    "language": "en"
+  },
+  "settings": {
+    "homeName": "Main home",
+    "emailNotifications": true,
+    "pushNotifications": true,
+    "systemNotifications": true,
+    "emailSummary": false,
+    "autoArm": true,
+    "darkMode": false,
+    "twoFactor": true,
+    "autoLogout": true,
+    "loginAlerts": true,
+    "sensibility": "Medium",
+    "updateTime": "30 seconds",
+    "sessionDuration": "8 hours",
+    "zoneReviewInterval": "6 hours",
+    "historyRetention": "6 months",
+    "hiddenSensors": false,
+    "language": "en"
+  },
   "devices": [
     {
       "id": 1,
@@ -271,7 +281,6 @@
       "signal": 90
     }
   ],
-  "tickets": [],
   "activities": [
     {
       "id": 1,
@@ -301,6 +310,5 @@
       "time": "Yesterday, 18:00",
       "tone": "info"
     }
-  ],
-  "registeredAccounts": []
+  ]
 }

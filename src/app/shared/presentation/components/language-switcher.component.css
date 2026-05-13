@@ -1,0 +1,19 @@
+.lang-switch  {
+  display: inline-flex;
+  border: 1px solid #d9e2ef;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+button  {
+  min-width: 46px;
+  min-height: 38px;
+  border: 0;
+  background: transparent;
+  color: #61708d;
+  font-weight: 900;
+}
+button.active  {
+  background: var(--primary);
+  color: #041833;
+}

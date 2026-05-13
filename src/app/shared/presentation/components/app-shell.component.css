@@ -1,0 +1,204 @@
+.app-layout  {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  background: var(--page);
+}
+.sidebar  {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  background: #fff;
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  padding: 22px 18px;
+}
+.brand  {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--ink);
+  font-size: 20px;
+  font-weight: 900;
+  margin-bottom: 28px;
+}
+.brand-logo  {
+  width: 62px;
+  height: 62px;
+  object-fit: contain;
+  margin-left: -6px;
+}
+.menu  {
+  display: grid;
+  gap: 7px;
+}
+.menu p  {
+  margin: 16px 0 6px;
+  color: #95a2bc;
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+.menu a  {
+  min-height: 44px;
+  border-radius: 12px;
+  color: #63708c;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 13px;
+  font-weight: 800;
+}
+.menu a .material-icons  {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: #e1fff8;
+  color: var(--primary-dark);
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+}
+.menu a.active, .menu a:hover  {
+  background: var(--primary-soft);
+  color: var(--primary-dark);
+}
+.menu a.active .material-icons, .menu a:hover .material-icons  {
+  background: var(--primary);
+  color: #06223d;
+}
+.menu small  {
+  margin-left: auto;
+  background: #ffeff1;
+  color: var(--danger);
+  border-radius: 50%;
+  min-width: 22px;
+  min-height: 22px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+}
+.logout  {
+  margin-top: auto;
+  min-height: 44px;
+  border: 0;
+  background: transparent;
+  color: #ff4f63;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 800;
+  padding: 0 10px;
+}
+.content  {
+  min-width: 0;
+}
+.topbar  {
+  height: 72px;
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+  padding: 0 30px;
+}
+.top-actions  {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.bell  {
+  width: 42px;
+  height: 42px;
+  border: 0;
+  background: transparent;
+  color: #66748d;
+}
+.user  {
+  border: 0;
+  background: transparent;
+  display: grid;
+  grid-template-columns: 42px auto;
+  column-gap: 10px;
+  text-align: left;
+  align-items: center;
+}
+.user span  {
+  grid-row: span 2;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 900;
+}
+.user strong  {
+  font-size: 14px;
+  color: var(--ink);
+}
+.user small  {
+  color: #8391aa;
+}
+.route-box  {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 36px 36px 54px;
+}
+:host-context(body.dark-mode) .sidebar,
+:host-context(body.dark-mode) .topbar  {
+  background: #172033;
+  border-color: #2c3950;
+}
+:host-context(body.dark-mode) .brand,
+:host-context(body.dark-mode) .user strong  {
+  color: #f8fafc;
+}
+:host-context(body.dark-mode) .user small  {
+  color: #b8c4d8;
+}
+:host-context(body.dark-mode) .bell  {
+  color: #b8c4d8;
+}
+:host-context(body.dark-mode) .menu a  {
+  color: #dbe4f0;
+}
+:host-context(body.dark-mode) .menu a .material-icons  {
+  background: #20314b;
+  color: #38dccb;
+}
+:host-context(body.dark-mode) .menu a.active,
+:host-context(body.dark-mode) .menu a:hover  {
+  background: #143b45;
+  color: #38dccb;
+}
+:host-context(body.dark-mode) .menu a.active .material-icons,
+:host-context(body.dark-mode) .menu a:hover .material-icons  {
+  background: #20d0bd;
+  color: #061832;
+}
+@media (max-width:980px)  {
+  .app-layout  {
+    grid-template-columns: 1fr;
+  }
+  .sidebar  {
+    position: relative;
+    height: auto;
+  }
+  .menu  {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .topbar  {
+    padding: 14px;
+    height: auto;
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .route-box  {
+    padding: 24px 16px;
+  }
+}
