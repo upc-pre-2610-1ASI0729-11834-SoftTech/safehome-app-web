@@ -1,0 +1,71 @@
+<main class="auth-page" aria-label="Authentication page">
+      <section class="auth-layout">
+        <article class="auth-panel">
+          <a class="auth-brand" routerLink="/login" aria-label="SafeHome authentication">
+            <img class="auth-logo" src="assets/images/safehome-logo.png" alt="SafeHome logo"><strong>SafeHome</strong>
+          </a>
+
+          <form *ngIf="mode() === 'login'" class="auth-card" (ngSubmit)="login()" aria-label="Sign in form">
+            <h1>{{ 'AUTH.SIGN_IN' | translate }}</h1>
+            <p>{{ 'AUTH.SIGN_IN_SUBTITLE' | translate }}</p>
+            <label><span class="field-label">{{ 'AUTH.EMAIL' | translate }}</span><input class="safe-input" name="loginEmail" type="email" [(ngModel)]="email" placeholder="name@email.com" aria-label="Email address"></label>
+            <label><span class="field-label">{{ 'AUTH.PASSWORD' | translate }}</span><input class="safe-input" name="loginPassword" type="password" [(ngModel)]="password" placeholder="12345" aria-label="Password"></label>
+            <div class="form-row"><label class="check"><input type="checkbox" name="remember" [(ngModel)]="remember">{{ 'AUTH.REMEMBER' | translate }}</label><a routerLink="/forgot-password">{{ 'AUTH.FORGOT' | translate }}</a></div>
+            <button class="safe-button wide" type="submit">{{ 'AUTH.SIGN_IN' | translate }} <span class="material-icons">arrow_forward</span></button>
+            <div class="switch-row"><span>{{ 'AUTH.NO_ACCOUNT' | translate }}</span><a class="safe-button-outline" routerLink="/register">{{ 'AUTH.CREATE_ACCOUNT' | translate }}</a></div>
+            <app-language-switcher />
+          </form>
+
+          <form *ngIf="mode() === 'register'" class="auth-card" (ngSubmit)="register()" aria-label="Register form">
+            <h1>{{ 'AUTH.CREATE_ACCOUNT' | translate }}</h1>
+            <p>{{ 'AUTH.CREATE_SUBTITLE' | translate }}</p>
+            <label><span class="field-label">{{ 'AUTH.FULL_NAME' | translate }}</span><input class="safe-input" name="name" [(ngModel)]="registerName" placeholder="Example: Ana Torres" aria-label="Full name"></label>
+            <label><span class="field-label">{{ 'AUTH.EMAIL' | translate }}</span><input class="safe-input" name="registerEmail" type="email" [(ngModel)]="email" placeholder="example@email.com" aria-label="Email address"></label>
+            <label><span class="field-label">{{ 'AUTH.PASSWORD' | translate }}</span><input class="safe-input" name="registerPassword" type="password" [(ngModel)]="password" placeholder="Example: 12345" aria-label="Password"></label>
+            <label><span class="field-label">{{ 'AUTH.CONFIRM_PASSWORD' | translate }}</span><input class="safe-input" name="confirmPassword" type="password" [(ngModel)]="confirmPassword" placeholder="Repeat your password" aria-label="Confirm password"></label>
+            <label class="check"><input type="checkbox" name="terms" [(ngModel)]="acceptedTerms">{{ 'AUTH.ACCEPT_TERMS' | translate }}</label>
+            <button class="safe-button wide" type="submit">{{ 'AUTH.CREATE_ACCOUNT' | translate }} <span class="material-icons">arrow_forward</span></button>
+            <div class="switch-row"><span>{{ 'AUTH.HAS_ACCOUNT' | translate }}</span><a class="safe-button-outline" routerLink="/login">{{ 'AUTH.SIGN_IN' | translate }}</a></div>
+            <app-language-switcher />
+          </form>
+
+          <form *ngIf="mode() === 'forgot'" class="auth-card" (ngSubmit)="recover()" aria-label="Recovery form">
+            <div class="round-icon"><span class="material-icons">lock_reset</span></div>
+            <h1>{{ 'AUTH.FORGOT_TITLE' | translate }}</h1>
+            <p>{{ 'AUTH.FORGOT_SUBTITLE' | translate }}</p>
+            <label><span class="field-label">{{ 'AUTH.EMAIL' | translate }}</span><input class="safe-input" name="recoverEmail" type="email" [(ngModel)]="email" placeholder="example@email.com" aria-label="Email address"></label>
+            <button class="safe-button wide" type="submit">{{ 'AUTH.SEND_RECOVERY' | translate }}</button>
+            <p *ngIf="notice()" class="notice">{{ 'AUTH.RECOVERY_SENT' | translate }}</p>
+            <a class="safe-button-outline wide" routerLink="/login">{{ 'AUTH.BACK_LOGIN' | translate }}</a>
+            <app-language-switcher />
+          </form>
+
+          <p *ngIf="message()" class="toast">{{ message() }}</p>
+
+          <article *ngIf="mode() === 'success'" class="auth-card success-card" aria-label="Created account message">
+            <div class="round-icon ok"><span class="material-icons">check</span></div>
+            <h1>{{ 'AUTH.SUCCESS_TITLE' | translate }}</h1>
+            <p>{{ 'AUTH.SUCCESS_SUBTITLE' | translate }}</p>
+            <div class="success-list">
+              <span><i></i>{{ 'AUTH.SUCCESS_1' | translate }}</span>
+              <span><i></i>{{ 'AUTH.SUCCESS_2' | translate }}</span>
+              <span><i></i>{{ 'AUTH.SUCCESS_3' | translate }}</span>
+            </div>
+            <button class="safe-button wide" type="button" (click)="openDashboard()">{{ 'AUTH.GO_DASHBOARD' | translate }}</button>
+            <button class="link-button" type="button" (click)="goToAddDevice()">{{ 'DEVICES.ADD' | translate }}</button>
+          </article>
+        </article>
+
+        <article class="hero-card" aria-label="SafeHome value message">
+          <div class="hero-content">
+            <h2>{{ heroTitle() | translate }}</h2>
+            <p>{{ heroText() | translate }}</p>
+            <div class="hero-points">
+              <span><i class="material-icons">shield</i>{{ 'AUTH.HERO_1' | translate }}</span>
+              <span><i class="material-icons">notifications_active</i>{{ 'AUTH.HERO_2' | translate }}</span>
+              <span><i class="material-icons">lock</i>{{ 'AUTH.HERO_3' | translate }}</span>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
