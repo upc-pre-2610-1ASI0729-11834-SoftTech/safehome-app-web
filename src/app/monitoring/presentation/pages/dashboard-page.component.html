@@ -1,0 +1,68 @@
+<section aria-label="Dashboard page">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">{{ 'DASHBOARD.HELLO' | translate:{ name: firstName() } }}</h1>
+          <p class="page-subtitle">{{ 'DASHBOARD.SUBTITLE' | translate }}</p>
+        </div>
+        <a class="safe-button" routerLink="/devices/new" aria-label="Add device"><span class="material-icons">add</span>{{ 'DEVICES.ADD' | translate }}</a>
+      </div>
+
+      <article class="hero-status" aria-label="Home status summary">
+        <div>
+          <span class="badge success">● {{ 'DASHBOARD.ALL_GOOD' | translate }}</span>
+          <h2>{{ 'DASHBOARD.HOME_SAFE' | translate }}</h2>
+          <p>{{ 'DASHBOARD.HOME_SAFE_TEXT' | translate:{ total: store.devices().length } }}</p>
+          <div class="hero-metrics">
+            <span><small>{{ 'DASHBOARD.ZONES' | translate }}</small><strong>{{ store.zones().length }} {{ 'DASHBOARD.ROOMS' | translate }}</strong></span>
+            <span><small>{{ 'DASHBOARD.LAST_ALERT' | translate }}</small><strong>{{ lastAlertLabel() }}</strong></span>
+          </div>
+        </div>
+        <div class="shield">
+          <div class="shield-ring outer">
+            <div class="shield-ring middle">
+              <div class="shield-ring inner">
+                <span class="material-icons">shield</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <section class="metric-grid" aria-label="Dashboard indicators">
+        <a class="metric-card safe-card" routerLink="/devices"><span class="metric-icon aqua material-icons">devices_other</span><strong>{{ store.activeDevices() }}</strong><p>{{ 'DASHBOARD.DEVICES_CONNECTED' | translate }}</p><small>+2</small></a>
+        <a class="metric-card safe-card" routerLink="/alerts"><span class="metric-icon red material-icons">notifications_none</span><strong>{{ store.pendingAlerts() }}</strong><p>{{ 'DASHBOARD.PENDING_ALERTS' | translate }}</p><small>{{ 'DASHBOARD.ACTIVE' | translate }}</small></a>
+        <a class="metric-card safe-card" routerLink="/history"><span class="metric-icon yellow material-icons">event_note</span><strong>{{ store.totalEvents() }}</strong><p>{{ 'DASHBOARD.REGISTERED_EVENTS' | translate }}</p><small>{{ 'DASHBOARD.TODAY' | translate }}</small></a>
+        <a class="metric-card safe-card" routerLink="/events"><span class="metric-icon green material-icons">schedule</span><strong>{{ store.uptime() }}</strong><p>{{ 'DASHBOARD.UPTIME' | translate }}</p><small>{{ 'DASHBOARD.OPTIMAL' | translate }}</small></a>
+      </section>
+
+      <section class="dashboard-grid">
+        <article class="safe-card chart-card" aria-label="Weekly activity chart">
+          <div class="card-title">
+            <div>
+              <h3>{{ 'DASHBOARD.WEEK_ACTIVITY' | translate }}</h3>
+              <p>{{ 'DASHBOARD.EVENTS_PER_DAY' | translate }}</p>
+            </div>
+            <strong>{{ 'DASHBOARD.LAST_7_DAYS' | translate }}</strong>
+          </div>
+          <div class="chart" role="img" aria-label="Events detected per day during the last seven days">
+            <div *ngFor="let bar of store.weeklyActivity()" class="bar-item">
+              <div class="bar-value">{{ bar.value }}</div>
+              <div class="bar" [style.height.%]="bar.height" [attr.aria-label]="(bar.labelKey | translate) + ': ' + bar.value + ' events'"></div>
+              <span>{{ bar.labelKey | translate }}</span>
+            </div>
+          </div>
+        </article>
+
+        <article class="safe-card alert-card" aria-label="Recent incidents">
+          <div class="card-title incidents-head">
+            <h3>{{ 'DASHBOARD.ACTIVE_ALERTS' | translate }}</h3>
+            <a class="history-link" routerLink="/history">See full history</a>
+          </div>
+          <a *ngFor="let event of store.events().slice(0,3)" class="alert-line" [routerLink]="['/alerts', event.id]">
+            <span [class]="'status-dot ' + tone(event.severity)"></span>
+            <div><strong>{{ translatedEventTitle(event.id, event.title) }}</strong></div>
+            <small>{{ event.createdAt }}</small>
+          </a>
+        </article>
+      </section>
+    </section>

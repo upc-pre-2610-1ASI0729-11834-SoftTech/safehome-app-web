@@ -1,0 +1,67 @@
+<section *ngIf="event() as item" aria-label="Alert detail page">
+      <div class="toolbar-row">
+        <a class="safe-button-ghost" [routerLink]="backPath()"><span class="material-icons">arrow_back</span>{{ 'COMMON.BACK' | translate }}</a>
+        <div class="actions">
+          <button class="safe-button-danger" type="button" (click)="deleteEvent(item.id)">{{ 'COMMON.DELETE' | translate }}</button>
+          <button class="safe-button" type="button" (click)="store.markEventAttended(item.id)">{{ 'ALERTS.MARK_ATTENDED' | translate }}</button>
+        </div>
+      </div>
+
+      <article [class]="'alert-hero ' + tone(item.severity)">
+        <div class="hero-icon"><span class="material-icons">{{ severityIcon(item.severity) }}</span></div>
+        <div>
+          <small>{{ item.type }} · {{ statusLabel(item.status) | translate }}</small>
+          <h1>{{ translatedEventTitle(item) }}</h1>
+          <p>{{ translatedEventDescription(item) }}</p>
+          <strong>{{ item.createdAt }}</strong>
+        </div>
+      </article>
+
+      <section class="detail-layout">
+        <main>
+          <article class="safe-card info">
+            <h3>{{ 'ALERTS.INFORMATION' | translate }}</h3>
+            <p><span>{{ 'ALERTS.TYPE' | translate }}</span><strong>{{ item.type }}</strong></p>
+            <p><span>{{ 'ALERTS.DATE' | translate }}</span><strong>{{ item.createdAt }}</strong></p>
+            <p><span>{{ 'ALERTS.DEVICE' | translate }}</span><strong>{{ item.device }}</strong></p>
+            <p><span>{{ 'ALERTS.LOCATION' | translate }}</span><strong>{{ item.zone }}</strong></p>
+            <p><span>{{ 'ALERTS.STATUS' | translate }}</span><strong>{{ statusLabel(item.status) | translate }}</strong></p>
+          </article>
+
+          <article class="safe-card recommendations">
+            <h3>{{ 'ALERTS.RECOMMENDATIONS' | translate }}</h3>
+            <ol>
+              <li>{{ 'ALERTS.REC_1' | translate }}</li>
+              <li>{{ 'ALERTS.REC_2' | translate }}</li>
+              <li>{{ 'ALERTS.REC_3' | translate }}</li>
+            </ol>
+          </article>
+
+          <div class="bottom-actions">
+            <button class="safe-button" type="button" (click)="store.markEventAttended(item.id)">{{ 'ALERTS.MARK_ATTENDED' | translate }}</button>
+            <a class="safe-button-outline" [routerLink]="['/devices', relatedDeviceId(item.device)]">{{ 'ALERTS.GO_DEVICE' | translate }}</a>
+            <button class="safe-button-outline" type="button" (click)="downloadEvidence(item)">{{ 'ALERTS.DOWNLOAD' | translate }}</button>
+          </div>
+        </main>
+
+        <aside>
+          <article class="safe-card side">
+            <h3>{{ 'ALERTS.TIMELINE' | translate }}</h3>
+            <p><span class="status-dot danger"></span>{{ 'ALERTS.TIMELINE_1' | translate }}</p>
+            <p><span class="status-dot info"></span>{{ 'ALERTS.TIMELINE_2' | translate }}</p>
+            <p><span class="status-dot warning"></span>{{ 'ALERTS.TIMELINE_3' | translate }}</p>
+          </article>
+
+          <article class="safe-card side">
+            <h3>{{ 'ALERTS.EVENT_LOCATION' | translate }}</h3>
+            <div class="mini-map"><span>{{ item.zone }}</span></div>
+          </article>
+
+          <article class="safe-card side related-box">
+            <h3>{{ 'ALERTS.RELATED_DEVICE' | translate }}</h3>
+            <p>{{ item.device }}</p>
+            <small>{{ item.zone }}</small>
+          </article>
+        </aside>
+      </section>
+    </section>

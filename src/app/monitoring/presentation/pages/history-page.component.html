@@ -1,0 +1,63 @@
+<section aria-label="Event history page">
+      <div class="page-head">
+        <div>
+          <h1 class="page-title">{{ 'HISTORY.TITLE' | translate }}</h1>
+          <p class="page-subtitle">{{ 'HISTORY.SUBTITLE' | translate }}</p>
+        </div>
+        <button class="safe-button-outline" type="button" (click)="exportData()" aria-label="Export event history"><span class="material-icons">download</span>{{ 'COMMON.EXPORT' | translate }}</button>
+      </div>
+
+      <section class="safe-card filter-card" aria-label="History filters">
+        <label class="search-box"><span class="material-icons">search</span><input name="historySearch" [(ngModel)]="search" [placeholder]="'HISTORY.SEARCH' | translate"></label>
+        <select class="safe-select" name="historyStatus" [(ngModel)]="status">
+          <option value="all">{{ 'HISTORY.ALL_STATUS' | translate }}</option>
+          <option value="active">{{ 'STATUS_LABELS.ACTIVE' | translate }}</option>
+          <option value="attended">{{ 'STATUS_LABELS.ATTENDED' | translate }}</option>
+          <option value="resolved">{{ 'STATUS_LABELS.RESOLVED' | translate }}</option>
+        </select>
+        <select class="safe-select" name="historyPriority" [(ngModel)]="priority">
+          <option value="all">{{ 'HISTORY.ALL_PRIORITIES' | translate }}</option>
+          <option value="critical">{{ 'PRIORITY.CRITICAL' | translate }}</option>
+          <option value="medium">{{ 'PRIORITY.MEDIUM' | translate }}</option>
+          <option value="info">{{ 'PRIORITY.INFO' | translate }}</option>
+          <option value="resolved">{{ 'PRIORITY.LOW' | translate }}</option>
+        </select>
+        <select class="safe-select" name="historyDevice" [(ngModel)]="device">
+          <option value="all">{{ 'HISTORY.ALL_DEVICES' | translate }}</option>
+          <option *ngFor="let name of deviceNames()" [value]="name">{{ name }}</option>
+        </select>
+      </section>
+
+      <section class="safe-card table-card">
+        <div class="table-wrap">
+          <table aria-label="Event history table">
+            <thead>
+              <tr>
+                <th>{{ 'ALERTS.DATE' | translate }}</th>
+                <th>{{ 'EVENTS.EVENT' | translate }}</th>
+                <th>{{ 'ALERTS.DEVICE' | translate }}</th>
+                <th>{{ 'ALERTS.LOCATION' | translate }}</th>
+                <th>{{ 'HISTORY.PRIORITY' | translate }}</th>
+                <th>{{ 'ALERTS.STATUS' | translate }}</th>
+                <th>{{ 'HISTORY.DESCRIPTION' | translate }}</th>
+                <th>{{ 'COMMON.DETAIL' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let event of filteredEvents()">
+                <td>{{ event.createdAt }}</td>
+                <td><strong>{{ translatedEventTitle(event) }}</strong></td>
+                <td>{{ event.device }}</td>
+                <td>{{ event.zone }}</td>
+                <td><span [class]="'badge ' + tone(event.severity)">{{ priorityLabel(event.severity) | translate }}</span></td>
+                <td><span [class]="'status-pill ' + event.status">{{ statusLabel(event.status) | translate }}</span></td>
+                <td class="description-cell">{{ translatedEventDescription(event) }}</td>
+                <td><a class="safe-button-outline compact" [routerLink]="['/alerts', event.id]">{{ 'COMMON.DETAIL' | translate }}</a></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <footer class="table-footer"><span>{{ 'HISTORY.SHOWING' | translate:{ count: filteredEvents().length } }}</span></footer>
+      </section>
+      <p *ngIf="toast()" class="toast">{{ toast() }}</p>
+    </section>
